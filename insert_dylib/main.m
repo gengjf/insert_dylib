@@ -122,7 +122,7 @@ bool insert_dylib(FILE *f, size_t header_offset, const char *dylib_path, bool we
 //    remove_code_signature(f, &mh, header_offset, commands_offset);
     
     size_t dylib_path_len = strlen(dylib_path);
-    size_t dylib_path_size = (dylib_path_len & ~3) + 4;
+    size_t dylib_path_size = (dylib_path_len & ~3) + (8 - (dylib_path_len & ~3)%8);
     uint32_t cmdsize = (uint32_t)(sizeof(struct dylib_command) + dylib_path_size);
     
     struct dylib_command dylib_command = {
